@@ -24,12 +24,12 @@ for image in dir_list:
 # show an "Open" dialog box and return the path to the selected file
 # https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
 group_photo = askopenfilename() 
-group_photo_name_array = group_photo.split("/")
+# group_photo_name_array = group_photo.split("/")
 
-group_photo_name = "./img/groups/" + group_photo_name_array[-1]
+# group_photo_name = "./img/groups/" + group_photo_name_array[-1]
 
 # Load test image to find faces in
-test_image = face_recognition.load_image_file(group_photo_name)
+test_image = face_recognition.load_image_file(group_photo)
 
 # Find faces in test image
 face_locations = face_recognition.face_locations(test_image)
@@ -51,6 +51,15 @@ for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodin
   if True in matches:
     first_match_index = matches.index(True)
     name = known_face_names[first_match_index]
+  else:
+    face_image = test_image[top:bottom, left:right]
+    new_image = Image.fromarray(face_image)
+
+    new_image.show()
+
+    newName = input(f"What is the name of the unknown person in the previous photo?: ")
+    new_image.save(f'./img/known/{newName}.jpg')
+    name = newName
   
   # Draw box
   draw.rectangle(((left, top), (right, bottom)), outline=(255,255,0))
@@ -65,5 +74,5 @@ del draw
 # Display image
 pil_image.show()
 
-# Save image
-pil_image.save('identify.jpg')
+# # Save image
+pil_image.save('most_recent_identification.jpg')
