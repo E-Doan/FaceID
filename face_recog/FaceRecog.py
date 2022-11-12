@@ -41,16 +41,28 @@ pil_image = Image.fromarray(test_image)
 # Create a ImageDraw instance
 draw = ImageDraw.Draw(pil_image)
 
+
 # Loop through faces in test image
 for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
   matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
   name = "Unknown Person"
 
+  diff = True
+
   # If match
   if True in matches:
     first_match_index = matches.index(True)
     name = known_face_names[first_match_index]
+  else:
+    face_image = test_image[top:bottom, left:right]
+    new_image = Image.fromarray(face_image)
+
+    new_image.show()
+
+    newName = input(f"What is the name of the unknown person in the previous photo?: ")
+    new_image.save(f'./img/known/{newName}.jpg')
+    name = newName
   
   # Draw box
   draw.rectangle(((left, top), (right, bottom)), outline=(255,255,0))
@@ -65,5 +77,5 @@ del draw
 # Display image
 pil_image.show()
 
-# Save image
-pil_image.save('identify.jpg')
+# # Save image
+pil_image.save('most_recent_identification.jpg')
