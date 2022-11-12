@@ -41,14 +41,11 @@ pil_image = Image.fromarray(test_image)
 # Create a ImageDraw instance
 draw = ImageDraw.Draw(pil_image)
 
-
 # Loop through faces in test image
 for(top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
   matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
   name = "Unknown Person"
-
-  diff = True
 
   # If match
   if True in matches:
