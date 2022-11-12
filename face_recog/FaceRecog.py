@@ -24,12 +24,12 @@ for image in dir_list:
 # show an "Open" dialog box and return the path to the selected file
 # https://stackoverflow.com/questions/678236/how-do-i-get-the-filename-without-the-extension-from-a-path-in-python
 group_photo = askopenfilename() 
-group_photo_name_array = group_photo.split("/")
+# group_photo_name_array = group_photo.split("/")
 
-group_photo_name = "./img/groups/" + group_photo_name_array[-1]
+# group_photo_name = "./img/groups/" + group_photo_name_array[-1]
 
 # Load test image to find faces in
-test_image = face_recognition.load_image_file(group_photo_name)
+test_image = face_recognition.load_image_file(group_photo)
 
 # Find faces in test image
 face_locations = face_recognition.face_locations(test_image)
